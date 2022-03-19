@@ -1,12 +1,21 @@
 package com.example.projeto_aula_1;
 
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +30,66 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
     //
+        btnGeo = (Button) findViewById(R.id.btn_gps);
+            ActivityCompat.requestPermissions(this, new String [] {Manifest.permission.ACCESS_FINE_LOCATION}, 123);//
+    //
+        btnGeo.setOnClickListener(new View.OnClickListener() {
+            //
+            @Override
+            public void onClick(View view) {
+                GPSTracker g = new GPSTracker(getApplication());
+                Location l = g.getLocation();
+
+                // Se a localização for diferente de nulo vai pegar a latitude e longitude e printar na tela a informação de latitude e londitude
+                if (l != null){
+                    double lat = l.getLatitude();
+                    double lon = l.getLongitude();
+                    Toast.makeText(getApplication(), "LATITUDE:" + lat +"\n LONGITUDE:" + lon, Toast.LENGTH_LONG).show();
+                }
+
+
+
+
+            }
+        });
+
+        //
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA))!=PackageManager.PERMISSION_GRANTED{
+            ActivityCompat.requestPermissions(this, new String [] {Manifest.permission.CAMERA}, 0 );
+        }
+
+        //
+        imageViewFoto = (ImageView) findViewById(R.id.image_foto);
+        findViewById(R.id.btn_pic).setOnClickListener(new View.OnClickListener() {
+
+            //
+            @Override
+            public void onClick(View view) {
+                tirarFoto();
+
+            }
+        });
+
+        //
+        private void tirarFoto(){
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, 1);
+
+        }
+        //
+        @Override
+                protected void onActivityResult(int requestCode, int resultCode, @Nullable intent data){
+            //
+            if (requestCode == 1 && resultCode == RESULT_OK){
+                Bundle extras = data.getExtras();
+                Bitmap imagem = (Bitmap) extras.get("data");
+                imageViewFoto.setImageBitmap(imagem);
+            }
+            super.onActivityResult(requestCode, resultCode, data);
+
+        }
+
+        }
 
 
     }
-}

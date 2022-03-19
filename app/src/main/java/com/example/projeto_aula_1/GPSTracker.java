@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,7 @@ public class GPSTracker implements LocationListener {
     @Override
     public void onLocationChanged(@NonNull Location location){ }
     //
+    public void onStatusChanged (String provider, int status, Bundle extras){ }
     
 
 }
