@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 public class GPSTracker implements LocationListener {
@@ -29,5 +30,26 @@ public class GPSTracker implements LocationListener {
         }
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        //
+        if (isGPSEnabled){
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000,10,this);
+            Location l = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            return l;
+        } else {
+            //
+            Toast.makeText(context, "Por Favor, Habilitar o GPS!",Toast.LENGTH_LONG).show();
+        }
+        //
+        return null;
     }
+    //
+    @Override
+    public void onProviderDisabled (@NonNull String provider){ }
+    //
+    @Override
+    public void onLocationChanged(@NonNull Location location){ }
+    //
+    
+
 }
