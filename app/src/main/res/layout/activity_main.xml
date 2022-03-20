@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_pic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tirar Foto"
@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.499" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_gps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Geolocalização"
@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="0.591" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_foto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
